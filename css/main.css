@@ -25,7 +25,7 @@ body {
   clear: both; }
 
 main {
-  margin: 0rem 0; }
+  margin: 16rem 0; }
 
 section {
   margin: 4px 0; }
@@ -47,12 +47,12 @@ h1 {
   border-top: 1px dashed #fffadd;
   border-bottom: 1px dashed #fffadd;
   font-size: 1.6rem; }
-  #iniciar #instruct {
-    background-color: rgba(29, 43, 49, 0.71);
+  #iniciar #instrucciones {
+    background-color: rgba(52, 81, 133, 0.6);
     float: left;
     width: 56%;
     margin: 1.25%; }
-  #iniciar #instruct p {
+  #iniciar #instrucciones p {
     padding: 1rem; }
   #iniciar #btn-area {
     float: right;
@@ -65,14 +65,14 @@ h1 {
     letter-spacing: 0.1rem;
     font-weight: 500; }
 
-#testimonials {
+#juego {
   border-bottom: 1px dashed #fffadd;
   font-size: 2rem; }
-  #testimonials p {
+  #juego p {
     padding: 2rem; }
 
 button {
-  background-color: #2196f3;
+  background-color: #66cc99;
   padding: 12px;
   border: 2px solid #000000;
   color: #fffadd;
@@ -82,24 +82,24 @@ button {
   text-shadow: 1px 1px 1px #000000;
   cursor: pointer; }
 
-#quiz {
+#pagina {
   width: 100%;
   margin: 0 auto; }
 
-#stats {
+#estado {
   background-color: rgba(0, 0, 71, 0.5);
   border-top: 1px solid #3366cc;
   border-right: 1px solid #3366cc;
   border-left: 1px solid #3366cc;
   padding: 10px;
   font-size: 1.2rem; }
-  #stats #stats-puntos {
+  #estado #estado-puntos {
     float: left;
     letter-spacing: 0.2rem; }
-  #stats #stats-progress {
+  #estado #estado-progreso {
     float: right;
     letter-spacing: 0.2rem; }
-  #stats .puntos, #stats .progress {
+  #estado .puntos, #estado .progreso {
     color: #94A3D1; }
 
 #Pregunta {
@@ -172,7 +172,7 @@ footer {
     margin-bottom: 1rem; }
 
 @media (max-width: 600px) {
-  #iniciar #instruct, #iniciar #btn-area {
+  #iniciar #instrucciones, #iniciar #btn-area {
     float: none;
     width: 94%; }
 

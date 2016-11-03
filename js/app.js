@@ -1,31 +1,35 @@
 $(document).ready(function() {
-    cycleTestimonials(1,0);
-    $('#iniciar-btn').click(function() {
-        remplazarHeading();
+
+    jugar(1,0);
+    $('#iniciar-btn').click (function() {
+        remplazarTitulo();
         $('#iniciar').fadeOut(500, function() {
             nuevoJuego();
             selecionarPreguntas();
             cargarPreguntas();
-            $('#quiz').fadeIn(500);
+            $('#pagina').fadeIn(500);
         });
-        $('#testimonials').fadeOut(500);
+        $('#juego').fadeOut(500);
         $('.disclaim').fadeOut(500);
     });
     $('#respuesta-btn').click(function() {
         var respuestaUsuario = $('input:radio[name=ans]:checked').val();
         if (!respuestaUsuario) {
-            alert('Seleccione una opción!');
+          swal({   title: "Error!",   text: "No haz ingresado ninguna opción, por favor ingresa una!",   type: "error",   confirmButtonText: "Aceptar" });
         } else {
             if (correcto(respuestaUsuario)) {
-                $('#quiz').fadeOut(500, function() {
-                    puntos++;
+                $('#pagina').fadeOut(500, function() {
+
+                    puntos+=3;
                     updatePuntos();
-                    $('.respuesta-exp').text(quiz_Preguntas[num]["respuesta-exp"]);
+                    $('.respuesta-exp').text(pagina_Preguntas[num]["respuesta-exp"]);
                     $('#correcto').fadeIn(500);
                 });
             } else {
-                $('#quiz').fadeOut(500, function() {
-                    $('.respuesta-exp').text(quiz_Preguntas[num]["respuesta-exp"]);
+                $('#pagina').fadeOut(500, function() {
+                  puntos--;
+                  updatePuntos();
+                    $('.respuesta-exp').text(pagina_Preguntas[num]["respuesta-exp"]);
                     $('#incorrecto').fadeIn(500);
                 });
             }
@@ -34,7 +38,7 @@ $(document).ready(function() {
     $('.cont-btn').click(function() {
         $('#correcto').fadeOut(500, function() {
             $('#incorrecto').fadeOut(500, function() {
-                if (count >= count_limit) {
+                if (count >= num_preg) {
                     updatePuntos();
                     updateRank();
                     $('#final').fadeIn(500);
@@ -42,43 +46,43 @@ $(document).ready(function() {
                     selecionarPreguntas();
                     cargarPreguntas();
                     $('form input').prop('checked', false);
-                    $('#quiz').fadeIn(500);
+                    $('#pagina').fadeIn(500);
                 }
             });
         });
     });
-    $('#iniciar-over').click(function() {
+    $('#iniciar-nuev').click(function() {
         $('#final').fadeOut(500, function() {
             nuevoJuego();
             selecionarPreguntas();
             cargarPreguntas();
             $('form input').prop('checked', false);
-            $('#quiz').fadeIn(500);
+            $('#pagina').fadeIn(500);
         });
     });
 });
 
 var num = 0;
 var count = 0;
-var count_limit = 8;
+var num_preg = 8;
 var puntos = 0;
 var prior_Preguntas = [];
 
-var remplazarHeading = function() {
+var remplazarTitulo = function() {
     var head = $("<span>BIOLOGÍA</span>");
     $('h1').find("span").remove();
     $('h1').append(head);
 };
-var cycleTestimonials = function(index,prev) {
-    $('#testimonials').children('p:eq(' + prev + ')').delay(1800).fadeOut(800, function(){
-        $('#testimonials').children('p:eq(' + index + ')').fadeIn(800, function(){
+var jugar = function(index,prev) {
+    $('#juego').children('p:eq(' + prev + ')').delay(1800).fadeOut(800, function(){
+        $('#juego').children('p:eq(' + index + ')').fadeIn(800, function(){
             prev = index;
             if (index === 3){
                 index = 0;
             } else {
                 index++;
             }
-            cycleTestimonials(index,prev);
+            jugar(index,prev);
         });
     });
 };
@@ -95,7 +99,7 @@ var selecionarPreguntas = function() {
     }
 };
 var abrirPregunta = function() {
-    var limit = Object.keys(quiz_Preguntas).length;
+    var limit = Object.keys(pagina_Preguntas).length;
     num = Math.floor((Math.random() * limit) + 1)
 };
 var wasAsked = function() {
@@ -109,26 +113,27 @@ var wasAsked = function() {
 };
 var cargarPreguntas = function() {
     prior_Preguntas.push(num);
-    $('#icon').html("<i class=\"fa fa-"+quiz_Preguntas[num]["icon"]+"\"></i>");
-    $('#text').html(quiz_Preguntas[num]["Pregunta"]);
-    $('#opcion-1').html(quiz_Preguntas[num]["opciones"][1]);
-    $('#opcion-2').html(quiz_Preguntas[num]["opciones"][2]);
-    $('#opcion-3').html(quiz_Preguntas[num]["opciones"][3]);
-    $('#opcion-4').html(quiz_Preguntas[num]["opciones"][4]);
-    $('#opcion-5').html(quiz_Preguntas[num]["opciones"][5]);
+    $('#icon').html("<i class=\"fa fa-"+pagina_Preguntas[num]["icon"]+"\"></i>");
+    $('#text').html(pagina_Preguntas[num]["Pregunta"]);
+    $('#opcion-1').html(pagina_Preguntas[num]["opciones"][1]);
+    $('#opcion-2').html(pagina_Preguntas[num]["opciones"][2]);
+    $('#opcion-3').html(pagina_Preguntas[num]["opciones"][3]);
+    $('#opcion-4').html(pagina_Preguntas[num]["opciones"][4]);
+    $('#opcion-5').html(pagina_Preguntas[num]["opciones"][5]);
     updatePuntos();
     count++;
-    $('.progress').text(count+"/"+count_limit);
+    $('.progreso').text(count+"/"+num_preg);
 };
 var correcto = function(respuestaUsuario) {
-    if (respuestaUsuario == quiz_Preguntas[num]["respuesta"]) {
+    if (respuestaUsuario == pagina_Preguntas[num]["respuesta"]) {
         return true;
     } else {
         return false;
     }
 };
 var updatePuntos = function() {
-    $('.puntos').text(puntos*3);
+    $('.puntos').text(puntos);
+
 
     }
 
@@ -150,7 +155,7 @@ var updateRank = function() {
         $('.rank-msg').text('No haz acertado niguna!! .');
     }
 };
-var quiz_Preguntas = {
+var pagina_Preguntas = {
     1: {
         "icon": "graduation-cap",
         "Pregunta": "Que son las enzimas?",
@@ -158,7 +163,7 @@ var quiz_Preguntas = {
       1: "Un atomo",
       2: "Una celula",
       3: "Un catalizador biologico",
-      4: "Una biomolecula",
+      4: "El nombre que se le da a el proceso de la meiosis",
       5: "Una neurona"
 
         },
@@ -193,12 +198,12 @@ var quiz_Preguntas = {
     },
     4: {
       "icon": "graduation-cap",
-      "Pregunta": "como se llama la glandua mas grande del cuerpo humano?",
+      "Pregunta": "como se llama la glandula mas grande del cuerpo humano?",
       "opciones": {
           1: "Tiroides",
           2: "Corazón",
           3: "Pulmones",
-          4: "Higado",
+          4: "pancreas",
           5: "Cerebro"
       },
       "respuesta": 4,
@@ -206,7 +211,7 @@ var quiz_Preguntas = {
     },
     5: {
       "icon": "graduation-cap",
-              "Pregunta": "En la meiosis cuantas celulas genera la celula madre?",
+              "Pregunta": "Cual es el resultado la meiosis ?",
               "opciones": {
                   1: "4 hijas",
                   2: "2 hijas",
@@ -234,10 +239,10 @@ var quiz_Preguntas = {
       "Pregunta": "En que periodo aparecieron los dinosaurios?",
       "opciones": {
           1: "Periodo jurasico ",
-          2: "Jim &amp; Billy's Great Journey",
-          3: "Bob's Outstanding Journey in Time",
-          4: "Nathan's Big Adventure, Ya Hosers!",
-          5: "The Newf's Exceptional Escapade"
+          2: "Ayer",
+          3: "El mes pasado",
+          4: "Hace 10 meses",
+          5: "Hace 3 horas"
       },
       "respuesta": 1,
       "respuesta-exp": "Norman's Awesome Experience (1989) involves an American scientist, a fashion model, and her photographer who are accidentally transported back in time to the 1st Century A.D. in an area of present day Switzerland controlled by the Roman Empire."
@@ -308,108 +313,107 @@ var quiz_Preguntas = {
   },
   13: {
       "icon": "graduation-cap",
-      "Pregunta": "9x1",
+      "Pregunta": "Es la biomolécula que contiene la información genética de cada ser vivo.",
       "opciones": {
-          1: "10 ",
-          2: "09",
-          3: "88",
-          4: "7",
-          5: "9"
+          1: "Proteinas ",
+          2: "Carbohidratos",
+          3: "ADN",
+          4: "Lipidos",
+          5: "Grasas"
       },
-      "respuesta": 5,
-      "respuesta-exp": "Porque si"
+      "respuesta": 3,
+      "respuesta-exp": "La biomolecula que contiene la informacion genética de cada ser vivo es el ADN"
   },
   14: {
       "icon": "graduation-cap",
-      "Pregunta": "1+1",
+      "Pregunta": "Es una secuencia ordenada de nucleótidos  en la molécula de ADN  y que contiene la información necesaria para la síntesis de proteínas.",
       "opciones": {
-          1: "3",
-          2: "6",
-          3: "90",
-          4: "2",
-          5: "09"
+          1: "Codigo Genetico",
+          2: "Gen",
+          3: "Fenotipo",
+          4: "Cariotipo",
+          5: "Alelo dominante"
       },
-      "respuesta": 4,
-      "respuesta-exp": "Porque si"
+      "respuesta": 1,
+      "respuesta-exp": " El codigo Genetico es una secuencia ordenada de nucleótidos  en la molécula de ADN  y que contiene la información necesaria para la síntesis de proteínas"
   },
   15: {
       "icon": "graduation-cap",
-      "Pregunta": "7x1",
+      "Pregunta": "Cómo se le llama a la unidad básica de la herencia?",
       "opciones": {
-          1: "7",
-          2: "12",
-          3: "90",
-          4: "16",
-          5: ")"
+          1: "Gen",
+          2: "Fenotipo",
+          3: "ARN",
+          4: "Genotipo",
+          5: "Caracter"
       },
       "respuesta": 1,
-      "respuesta-exp": "Porque si"
+      "respuesta-exp": "La unidad basica de la herencia es el Gen"
   },
   16: {
       "icon": "graduation-cap",
-      "Pregunta": "10x10",
+      "Pregunta": "Los genes estás conformador por:",
       "opciones": {
-          1: "400",
-          2: "300",
-          3: "100",
-          4: "90",
-          5: "76"
+          1: "Proteinas",
+          2: "Lipidos",
+          3: "Ácidos nucleicos",
+          4: "Carbohidratos",
+          5: "Aminoácidos"
       },
       "respuesta": 3,
-      "respuesta-exp": "Porque si"
+      "respuesta-exp": "Los genes de conforman de Ácidos nucleicos"
   },
   17: {
       "icon": "graduation-cap",
-      "Pregunta": "9x9",
+      "Pregunta": "¿Cómo se le llama a la unidad básica de la herencia?",
       "opciones": {
-          1: "72",
-          2: "81",
-          3: "32",
-          4: "67",
-          5: "54"
+          1: "Eucariotas",
+          2: "Gen",
+          3: "Animales",
+          4: "Procariotas",
+          5: "Ningina"
       },
       "respuesta": 2,
-      "respuesta-exp": "Porque si"
+      "respuesta-exp": "La unidad básica de la herencia es el GEN"
   },
   18: {
       "icon": "graduation-cap",
-      "Pregunta": "3x3",
+      "Pregunta": "Cual es la primera fase del proceso Mitosis",
       "opciones": {
-          1: "12",
-          2: "10",
-          3: "9",
-          4: "76",
-          5: "65"
+          1: "Profase",
+          2: "Metafase",
+          3: "Prometafase",
+          4: "Telofase",
+          5: "Ninguna de la anteriores"
       },
-      "respuesta": 3,
-      "respuesta-exp": "Porque si"
+      "respuesta": 1,
+      "respuesta-exp": "La primera fase del proceso mitosis es la Profase"
   },
   19: {
       "icon": "graduation-cap",
-      "Pregunta": "4x2",
+      "Pregunta": "realizan la sintesis de las proteinas",
       "opciones": {
-          1: "23",
-          2: "87",
-          3: "54",
-          4: "6",
-          5: "8"
+          1: "Ribosomas",
+          2: "Litiosomas",
+          3: "Mitocondrias",
+          4: "retuculo endoplasmatico",
+          5: "Ninguna de las anteriores"
       },
-      "respuesta": 5,
-      "respuesta-exp": "Porque si"
+      "respuesta": 1,
+      "respuesta-exp": "Los ribosomas realizan la sinteensis de las proteinas"
 
     },
     20: {
       "icon": "graduation-cap",
-      "Pregunta": "2x3",
+      "Pregunta": "Que pasa en la profase?",
       "opciones": {
-          1: "3",
-          2: "2",
-          3: "9",
-          4: "10",
-          5: "6"
+          1: "Los cromosomas se alinean en el plano ecuatorial",
+          2: "Alcanza el maximo nivel de compactación de compacatcion del ADN",
+          3: "Aparece la membrana nueclear",
+          4: "Se definen los polos celulares",
       },
       "respuesta": 5,
-      "respuesta-exp": "Porque si"
+      "respuesta-exp": ""
     }
 };
 
