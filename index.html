@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="css/normalize.min.css">
+    <link rel="stylesheet" type="text/css" href="lib/font-awesome-4.3.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+    <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Open+Sans:100,200,300,400,500,600,700,800">
+    <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300">
+    <link rel="stylesheet" type="text/css" href="lib/sweetalert-master/dist/sweetalert.css">
+
+    <title>TriviAnima Biologia</title>
+</head>
+<body>
+
+<header>
+    <div class="content">
+        <h1>TriviÁnima</h1>
+    </div>
+</header>
+<main id="main" role="main">
+
+    <div class="content">
+
+        <section id="pagina" class="hidden">
+            <div id="estado" class="clearfix">
+                <div id="estado-puntos">PUNTOS: <span class="puntos">0</span></div>
+                <div id="estado-progreso">PREGUNTAS: <span class="progreso">0/0</span></div>
+            </div>
+            <div id="Pregunta">
+                <div id="icon"><i class="fa fa-bolt"></i></div>
+                <p id="text">[Pregunta text goes here]</p>
+                <form>
+                <div><input type="radio" name="ans" value="1"> <span id="opcion-1">[opcion uno]</span> </div>
+                <div><input type="radio" name="ans" value="2"> <span id="opcion-2">[opcion dos]</span> </div>
+                <div><input type="radio" name="ans" value="3"> <span id="opcion-3">[opcion tres]</span> </div>
+                <div><input type="radio" name="ans" value="4"> <span id="opcion-4">[opcion cuatro]</span> </div>
+                <div><input type="radio" name="ans" value="5"> <span id="opcion-5">[opcion cinco]</span> </div>
+                </form>
+                <button id="respuesta-btn">Responder</button>
+            </div>
+        </section>
+
+        <section id="iniciar" class="clearfix">
+            <div id="instrucciones">
+                <h2>Empezar a Jugar</h2>
+                <p><strong>REGLA 1</strong>: La trivia es Biologia</p>
+                <p><strong>REGLA 2</strong>: Cada pregunta correcta vale 3 puntos y la incorrectas restan 1 punto</p>
+            </div>
+            <div id="btn-area">
+                <button id="iniciar-btn"> Empezar </button>
+            </div>
+        </section>
+
+
+        <section id="correcto" class="pop-up hidden">
+            <h2>Correcto!<br>+3</h2>
+            <p class="respuesta-exp">[x]</p>
+            <p>Muy bien!! Tienes <span class="puntos">0</span> punto(s).</p>
+            <br>
+            <p><button class="cont-btn">Continuar</button></p>
+        </section>
+
+        <section id="incorrecto" class="pop-up hidden">
+            <h2>Incorrecto!<br>-1</h2>
+            <p class="respuesta-exp">[x]</p>
+            <p>Le erraste<br>... Ahora ya sabes la respuesta correcta<br>Tienes <span class="puntos">0</span> punto(s).</p>
+            <br>
+            <p><button class="cont-btn">Continuar</button></p>
+        </section>
+
+        <section id="final" class="pop-up hidden">
+            <h2>Acertaste <span class="puntos">0</span>/8</h2>
+            <p>Tienes<span class="puntos">0</span> punto(s)<br><span class="rank">[rank]</span></p>
+            <p><span class="rank-msg">[msg]</span></p>
+            <br>
+            <p><button id="iniciar-nuev">Volver a intentar</button></p>
+        </section>
+
+    </div>
+
+</main>
+<script src="http://code.jquery.com/jquery.min.js"></script>
+<script src="js/app.js"></script>
+<script src="lib/sweetalert-master/dist/sweetalert.min.js"></script>
+</body>
+</html>
